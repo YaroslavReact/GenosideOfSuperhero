@@ -1,7 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 import EnemyFields from "./components/EnemyField";
-import * as actions from "./store/gameZoneStore/actions";
+import { actions } from './store';
 import PointsZone from "./components/PointZone";
 import StartZone from "./components/StartZone";
 import EndGame from "./components/EndGame";
@@ -76,7 +76,9 @@ function GameZone({
       if(score >= 100){
         endGame(true);
         lelevOfDifficult(0);
-      }else setTimeout(startGame, 10);
+        return;
+      }
+      setTimeout(startGame, 10);
     }
 
     function checkLose(){
@@ -86,7 +88,9 @@ function GameZone({
       if(chance + 1  >= 3 ){
         endGame(false);
         lelevOfDifficult(0);
-      }else  setTimeout(startGame, 1000);
+        return;
+      }  
+      setTimeout(startGame, 1000);
     }
     return (
         <div className="gameZone">  
@@ -127,7 +131,7 @@ const mapDispatchToProps = dispatch => {
       showSuccessfulKill,
       hideSuccessfulKill,
       resetHeroOnField 
-    } = actions;
+    } = actions.gameZone;
     return {
       endGame: (outcome) => dispatch(endGame(outcome)),
       selectSuperhero: ()=> dispatch(selectSuperhero()),

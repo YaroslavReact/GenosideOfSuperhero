@@ -1,4 +1,4 @@
-import * as actionTYPES from "../constants";
+import * as actionTYPES from "./constants";
 
 const defultState = {
       startingScreen: true,

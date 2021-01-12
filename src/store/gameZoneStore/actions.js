@@ -1,4 +1,4 @@
-import  * as actionTYPES from "../constants";
+import  * as actionTYPES from "./constants";
 
 export function startingScreen() {
     return {

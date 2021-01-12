@@ -2,10 +2,10 @@ import React from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/gameZoneStore/actions";
 
-function StartZone(props) {
+function StartZone({ startingScreen, startGame }) {
     function Start(){
-      props.startingScreen();
-      setTimeout( props.startGame, 1500); 
+      startingScreen();
+      setTimeout( startGame, 1500); 
     }
 
     return (
