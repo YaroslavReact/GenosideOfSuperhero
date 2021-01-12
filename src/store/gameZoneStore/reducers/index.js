@@ -1,15 +1,47 @@
-import * as actionTYPES from "../constants/constants";
+import * as actionTYPES from "../constants";
 
 const defultState = {
       startingScreen: true,
       isEndingScreen: false,
       enemyHide: false,
-      outcome: undefined,
+      outcome: null,
       superhero: 0,
       baseTime: 0,
       chance: 0,
       score: 0,
       lvl: 0,
+      enemies: [
+            {
+              id: 0,
+              isHeroShowing: false,
+              isSuccessfulKill: false,
+            },
+            {
+              id: 1,
+              isHeroShowing: false,
+              isSuccessfulKill: false,
+            },
+            {
+              id: 2,
+              isHeroShowing: false,
+              isSuccessfulKill: false,
+            },
+            {
+              id: 3,
+              isHeroShowing: false,
+              isSuccessfulKill: false,
+            },
+            {
+              id: 4,
+              isHeroShowing: false,
+              isSuccessfulKill: false,
+            },
+            {
+              id: 5,
+              isHeroShowing: false,
+              isSuccessfulKill: false,
+            }
+          ]
 }
 
 export default function gameReducers(state = defultState, action){
@@ -28,7 +60,7 @@ export default function gameReducers(state = defultState, action){
             case actionTYPES.SUPERHERO:
                   return {
                         ...state,
-                        superhero: Math.floor(Math.random() * Math.floor(9)),
+                        superhero: action.superhero,
                   };
             case actionTYPES.START_TIMER:
                   return {
@@ -49,7 +81,12 @@ export default function gameReducers(state = defultState, action){
                   return {
                         ...state,
                         lvl: action.lvl,
-                  };                          
+                  };
+            case actionTYPES.UPDATEENEMYFIELD:
+                  return {
+                        ...state,
+                        enemies: action.enemies ,
+                  };                        
             default:
                   return state            
       }

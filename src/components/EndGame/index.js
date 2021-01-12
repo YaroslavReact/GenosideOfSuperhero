@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import * as actions from "../store/actions/actions";
+import * as actions from "../../store/gameZoneStore/actions";
 
 function EndGame(props) {
     const {endGame, yourFailed, gameScore, startGame, startingScreen, outcome} = props;
@@ -9,7 +9,6 @@ function EndGame(props) {
       gameScore(0);
       startingScreen();
       endGame();
-      document.querySelector(".enemyFields").style.display = "flex";
       setTimeout( startGame, 1500); 
     }
     return (

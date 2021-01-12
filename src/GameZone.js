@@ -1,14 +1,31 @@
 import React from "react";
 import { connect } from "react-redux";
-import EnemyFields from "./components/EnemyFields";
-import * as actions from "./store/actions/actions";
-import PointsZone from "./components/PointsZone";
+import EnemyFields from "./components/EnemyField";
+import * as actions from "./store/gameZoneStore/actions";
+import PointsZone from "./components/PointZone";
 import StartZone from "./components/StartZone";
 import EndGame from "./components/EndGame";
 
 let timer;
-function GameZone(props) { 
-    const { superheroShow, gameScore, startTimer, lelevOfDifficult, yourFailed, chance, score, lvl, startingScreen, isEndingScreen, endGame } = props;
+function GameZone({ 
+  selectSuperhero, 
+  gameScore, 
+  startTimer, 
+  lelevOfDifficult, 
+  yourFailed, 
+  chance, 
+  score, 
+  lvl, 
+  startingScreen, 
+  isEndingScreen, 
+  endGame, 
+  showRandomHero, 
+  hideHero, 
+  showSuccessfulKill, 
+  hideSuccessfulKill, 
+  resetHeroOnField, 
+  enemies 
+}) { 
     const [counter, setCounter] = React.useState(4000);
 
     React.useEffect(() => { 
@@ -19,54 +36,22 @@ function GameZone(props) {
       };
      }, [counter]);
 
-    function isThereAHeroHere(enemy){
-      const heroBlock = enemy.target;
-      if(heroBlock.classList[0] !== "enemy"){
-        heroBlock.classList[0] === "show" && hideEnemy(enemy);
-      }else{
-        heroBlock.children[0].classList[0] === "show" && hideEnemy(enemy);
+    function hideEnemy(enemy){ 
+      if(enemies[enemy].isHeroShowing){
+        hideHero(enemy)
+        showSuccessfulKill(enemy)
+        endTimer()
+        setTimeout(() => hideSuccessfulKill(enemy), 250);
       }
-    }
-
-    function hideEnemy(enemy){
-      const heroBlock = enemy.target;
-      if(heroBlock.classList[0] !== "enemy"){
-        heroBlock.parentNode.classList.add("win");
-        heroBlock.classList.remove("show");
-        heroBlock.classList.add("hide");
-      }else{
-        heroBlock.classList.add("win"); 
-        heroBlock.children[0].classList.remove("show");
-        heroBlock.children[0].classList.add("hide");
-      }
-     endTimer();
     }
     
-    function ShowEnemy(){
-      const enemies = document.querySelector(".enemyFields").children;
-      setTimeout( droppingWin, 150, enemies);
-      let rnd = getRandomInt(6);
-      enemies[rnd].children[0].classList.remove("hide");
-      enemies[rnd].children[0].classList.add("show");
-      superheroShow();
+    function ShowEnemy(){ 
+      showRandomHero()
+      selectSuperhero();
     }
 
-    function getRandomInt(max) {
-      return Math.floor(Math.random() * Math.floor(max));
-    }
-
-    function droppingWin(enemies){
-      for( let i = 0; i < enemies.length; i++ ) {
-        enemies[i].classList.remove("win");
-      }
-    }
-
-    function resetField(){
-      const enemies = document.querySelector(".enemyFields").children;
-      for( let i = 0; i < enemies.length; i++ ) {
-        enemies[i].children[0].classList.remove("show");
-        enemies[i].children[0].classList.add("hide");
-      }
+    function resetField(){ 
+      resetHeroOnField()
     } 
     
     function startGame(){
@@ -90,27 +75,25 @@ function GameZone(props) {
     function checkWin(){
       if(score >= 100){
         endGame(true);
-        document.querySelector(".enemyFields").style.display = "none";
         lelevOfDifficult(0);
       }else setTimeout(startGame, 10);
     }
 
     function checkLose(){
+      clearInterval(timer);
       resetField();
       yourFailed(chance + 1);
-      clearInterval(timer);
       if(chance + 1  >= 3 ){
         endGame(false);
-        document.querySelector(".enemyFields").style.display = "none";
         lelevOfDifficult(0);
       }else  setTimeout(startGame, 1000);
     }
     return (
         <div className="gameZone">  
           <h1 className="gameLogo">Genocide Of Superheroes</h1>
-           <EnemyFields 
-            isThereAHeroHere={isThereAHeroHere} 
-          />
+           {!startingScreen && !isEndingScreen && <EnemyFields 
+            hideEnemy={hideEnemy} 
+          />}
           {startingScreen && <StartZone 
             startGame={startGame}
           />}
@@ -128,17 +111,35 @@ const mapStateToProps = state => ({
     chance: state.mainState.chance,
     score: state.mainState.score,
     lvl: state.mainState.lvl,
+    enemies: state.mainState.enemies,
   });
   
 const mapDispatchToProps = dispatch => {
-    const { endGame, superheroShow, gameScore, startTimer, lelevOfDifficult, yourFailed } = actions;
+    const { 
+      endGame,
+      selectSuperhero,
+      gameScore, 
+      startTimer, 
+      lelevOfDifficult, 
+      yourFailed, 
+      showRandomHero, 
+      hideHero, 
+      showSuccessfulKill,
+      hideSuccessfulKill,
+      resetHeroOnField 
+    } = actions;
     return {
       endGame: (outcome) => dispatch(endGame(outcome)),
-      superheroShow: ()=> dispatch(superheroShow()),
+      selectSuperhero: ()=> dispatch(selectSuperhero()),
       yourFailed: (chance) => dispatch(yourFailed(chance)),
       startTimer: (baseTime) => dispatch(startTimer(baseTime)),
       gameScore: (score) => dispatch(gameScore(score)),
       lelevOfDifficult: (lvl) => dispatch(lelevOfDifficult(lvl)),
+      showRandomHero: () => dispatch(showRandomHero()),
+      hideHero: (selectedСell) => dispatch(hideHero(selectedСell)),
+      showSuccessfulKill: (selectedСell) => dispatch(showSuccessfulKill(selectedСell)),
+      hideSuccessfulKill: (selectedСell) => dispatch(hideSuccessfulKill(selectedСell)),
+      resetHeroOnField: () => dispatch(resetHeroOnField()),
     };
   };
 

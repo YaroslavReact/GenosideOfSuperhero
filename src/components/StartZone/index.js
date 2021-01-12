@@ -1,11 +1,10 @@
 import React from "react";
 import { connect } from "react-redux";
-import * as actions from "../store/actions/actions";
+import * as actions from "../../store/gameZoneStore/actions";
 
 function StartZone(props) {
     function Start(){
-      document.querySelector(".enemyFields").style.display = "flex";
-      props.startingScreen()
+      props.startingScreen();
       setTimeout( props.startGame, 1500); 
     }
 
@@ -18,7 +17,7 @@ function StartZone(props) {
 }
 
 const mapStateToProps = state => ({
-  startingScreen: state.mainState.startingScreen,
+   startingScreen: state.mainState.startingScreen,
   });
 
 const mapDispatchToProps = dispatch => {

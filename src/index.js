@@ -1,15 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles/App.css';
-import { Provider } from 'react-redux';
-import { store } from  './store/store';
-import GameZone from "./GameZone" ;
+import App from "./App";
 
 ReactDOM.render(
-  <Provider store={store}>
-    <React.StrictMode>
-      <GameZone store={store}/>
-    </React.StrictMode>
-  </Provider>,
+  <App />,
   document.getElementById('root')
 );
