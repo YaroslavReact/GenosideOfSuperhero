@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/gameZoneStore/actions";
 
-function StartZone(props) {
+function StartZone({ startingScreen, startGame }) {
     function Start(){
-      props.startingScreen();
-      setTimeout( props.startGame, 1500); 
+      startingScreen();
+      setTimeout( startGame, 1500);
     }
 
     return (
@@ -25,8 +25,8 @@ const mapDispatchToProps = dispatch => {
     return {
       startingScreen: () => dispatch(startingScreen()),
     };
-  };  
-  
+  };
+
 export default connect(
   mapStateToProps,
   mapDispatchToProps

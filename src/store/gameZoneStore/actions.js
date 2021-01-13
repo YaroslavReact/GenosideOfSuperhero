@@ -1,11 +1,11 @@
-import  * as actionTYPES from "../constants";
+import  * as actionTYPES from "./constants";
 
 export function startingScreen() {
     return {
           type: actionTYPES.STARTINGSCREEN,
         }
   }
-  
+
 export function endGame(outcome) {
     return {
           type: actionTYPES.ENDGAME,
@@ -13,13 +13,7 @@ export function endGame(outcome) {
         };
   }
 
-  export function selectSuperhero() {
-    const generateSuperhero = Math.floor(Math.random() * Math.floor(9));
-    return {
-            type: actionTYPES.SUPERHERO,
-            superhero: generateSuperhero,
-          };
-    }
+
 
 export function startTimer(baseTime) {
     return {
@@ -27,20 +21,20 @@ export function startTimer(baseTime) {
       baseTime: baseTime,
     };
   }
-    
+
 export function lelevOfDifficult(lvl = 1) {
     return {
       type: actionTYPES.LEVEL_OF_DIFFICULT,
       lvl: lvl,
     };
   }
-    
+
 export function gameScore(score) {
   return {
     type: actionTYPES.SCORE,
     score: score,
   }
-}   
+}
 
 export function yourFailed(chance = 0) {
   return {
@@ -54,6 +48,14 @@ export function UpdateEnemyField(enemies) {
         type: actionTYPES.UPDATEENEMYFIELD,
         enemies: enemies,
       }
+}
+
+export function selectSuperhero() {
+  const generateSuperhero = Math.floor(Math.random() * Math.floor(9));
+  return {
+    type: actionTYPES.SUPERHERO,
+    superhero: generateSuperhero,
+  };
 }
 
 export function showRandomHero() {

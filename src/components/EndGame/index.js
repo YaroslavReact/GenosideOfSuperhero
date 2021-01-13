@@ -2,8 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import * as actions from "../../store/gameZoneStore/actions";
 
-function EndGame(props) {
-    const {endGame, yourFailed, gameScore, startGame, startingScreen, outcome} = props;
+function EndGame({ endGame, yourFailed, gameScore, startGame, startingScreen, outcome }) {
     function reset(){
       yourFailed(0);
       gameScore(0);

@@ -1,9 +1,7 @@
 import React from "react";
 import { connect } from "react-redux";
 
-function PointsZone(props) {
-    const { lvl, score, chance, baseTime } = props;
-    
+function PointsZone({ lvl, score, chance, baseTime }) {
     return (
         <div className="pointsZone">
             <h1>Status Bar</h1>
@@ -11,7 +9,7 @@ function PointsZone(props) {
                 <p>Game difficult: {lvl}</p>
                 <p>Score: {score} / 100 point(s)</p>
                 <p>You failed: {chance} time(s)</p>
-            {props.baseTime === 0 ? "Time over" : <p>Time: {baseTime} ms</p>}
+                {baseTime === 0 ? "Time over" : <p>Time: {baseTime} ms</p>}
             </div>
         </div>
     )
@@ -21,6 +19,6 @@ const mapStateToProps = state => ({
     chance: state.mainState.chance,
     score: state.mainState.score,
     lvl: state.mainState.lvl,
-  });
+});
 
 export default connect(mapStateToProps)(PointsZone);
