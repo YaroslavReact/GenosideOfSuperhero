@@ -86,7 +86,7 @@ function GameZone({
     selectSuperhero();
     setTimeout(() => {
       showRandomHero();
-    }, 200);
+    }, 10);
 
   }
 
@@ -96,6 +96,7 @@ function GameZone({
 
   function startGame() {
     let time = Math.round(4000 * (1 - 0.1 * lvl));
+    time <= 400 && (time = 650);
     setCounter(time);
     ShowEnemy();
     timer = setInterval(() => setCounter(c => c - 10), 10);
@@ -105,7 +106,7 @@ function GameZone({
     clearInterval(timer);
     if (counter > 0) {
       gameScore(score + 1);
-      ((score + 1) % 10 === 0) && lelevOfDifficult(lvl + 1);
+      (( score + 1) % 10 === 0) && lelevOfDifficult(lvl + 1);
       checkWin();
     } else {
       checkLose();
