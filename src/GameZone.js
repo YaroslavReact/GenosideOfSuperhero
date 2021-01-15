@@ -96,7 +96,7 @@ function GameZone({
 
   function startGame() {
     let time = Math.round(4000 * (1 - 0.1 * lvl));
-    time <= 400 && (time = 650);
+    time <= 400 && (time = 550);
     setCounter(time);
     ShowEnemy();
     timer = setInterval(() => setCounter(c => c - 10), 10);
