@@ -114,7 +114,7 @@ function GameZone({
   }
 
   function checkWin() {
-    if (score >= 100) {
+    if (score + 1 >= 100) {
       endGame(true);
       lelevOfDifficult(0);
       return;
